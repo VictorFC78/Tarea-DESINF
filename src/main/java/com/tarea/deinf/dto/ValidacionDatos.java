@@ -26,9 +26,17 @@ public class ValidacionDatos {
         }
         return true;
     }
-    public static  boolean validacionCodigo(String codigo){
+    public static  boolean validacionCodigoCompania(String codigo){
          if (codigo.matches("[A-Z][1-9]"))return true;
         else if (codigo.matches("[A-Z][A-Z]"))return true;
+        else{
+            mostarErrores(ValidacionDatos.codigo);
+            return false;
+        }
+    }
+    public static boolean validacionCodigoVuelo(String codigo){
+         if (codigo.matches("[A-Z][1-9]\\d{1,4}"))return true;
+        
         else{
             mostarErrores(ValidacionDatos.codigo);
             return false;
