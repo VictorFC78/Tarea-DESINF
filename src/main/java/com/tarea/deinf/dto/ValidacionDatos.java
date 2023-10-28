@@ -11,11 +11,7 @@ public class ValidacionDatos {
    public static final String codigo="Formato:dos vocales mayusculas o un digito y vocal mayuscula";
 
     public static boolean ValidacionNumeroTelefono(String numTelf){
-        if (numTelf.length()>15 || numTelf.length()<12){
-            mostarErrores(numerotlf);
-            return false;
-        }
-        else if(numTelf.matches("\\d{12,15}")){
+        if(numTelf.matches("\\d{12,15}")){
             return true;
         }else{
             mostarErrores(numerotlf);
@@ -31,14 +27,24 @@ public class ValidacionDatos {
         return true;
     }
     public static  boolean validacionCodigo(String codigo){
-        if(codigo.length()!=2){
-            mostarErrores(ValidacionDatos.codigo);
-            return false;
-        }
-        else if (codigo.matches("[A-Z][1-9]"))return true;
+         if (codigo.matches("[A-Z][1-9]"))return true;
         else if (codigo.matches("[A-Z][A-Z]"))return true;
         else{
             mostarErrores(ValidacionDatos.codigo);
+            return false;
+        }
+    }
+    public static boolean validacionIATA(String iata){
+         if (iata.matches("[A-Z][A-Z][A-Z]"))return true;
+        else{
+            
+            return false;
+        }
+    }
+    public static boolean validacionHora(String hora){
+        if(hora.matches("\\d{2}:\\d{2}"))return true;
+        else{
+            
             return false;
         }
     }
