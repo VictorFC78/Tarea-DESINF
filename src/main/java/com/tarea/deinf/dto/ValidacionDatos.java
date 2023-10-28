@@ -48,6 +48,19 @@ public class ValidacionDatos {
             return false;
         }
     }
+    public static boolean validacionNumVuelo(String vuelo){
+        if(vuelo.matches("\\d{1,4}")) return true;
+        else{
+            
+            return false;
+        }
+    }
+    public static boolean validacionDiasOpera(String dias){
+        if (dias.matches("[L]?[M]?[X]?[J]?[V]?[S]?[D]?")) return true;
+        else{
+            return false;
+        }
+    }
     private static void mostarErrores(String mensaje){    
         JOptionPane.showMessageDialog(null, mensaje,"ERROR DE VALIDACION",JOptionPane.ERROR_MESSAGE);
     }
