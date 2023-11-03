@@ -22,6 +22,7 @@ private int opcion;
         ComboBoxCodigos.setModel(model);
         refrescarNombre();
     }
+    //rellena una lista con los codigos de las compañias para utilizar en el combobox
     private void rellenarCodigos(){
         lista=CompaniaAerea.getListaCompanias();//recupera lista de compañias
         //itera pa rellenr un la lista con los codigos
@@ -70,7 +71,7 @@ private int opcion;
 
         jLabel2.setText("Nombre");
 
-        ButtonAceptar.setText("Aceptar");
+        ButtonAceptar.setText("Borrar");
         ButtonAceptar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ButtonAceptarActionPerformed(evt);

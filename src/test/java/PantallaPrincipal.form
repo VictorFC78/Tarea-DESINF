@@ -24,9 +24,11 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="1" attributes="0">
-              <EmptySpace pref="218" max="32767" attributes="0"/>
+              <EmptySpace pref="147" max="32767" attributes="0"/>
               <Component id="ButtonIrDialogo" min="-2" max="-2" attributes="0"/>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="2" max="-2" attributes="0"/>
+              <Component id="ButtonModificar" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
               <Component id="ButtonBorrar" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
           </Group>
@@ -39,6 +41,7 @@
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="ButtonIrDialogo" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="ButtonBorrar" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="ButtonModificar" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="41" max="-2" attributes="0"/>
           </Group>
@@ -48,7 +51,7 @@
   <SubComponents>
     <Component class="javax.swing.JButton" name="ButtonIrDialogo">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Ir a "/>
+        <Property name="text" type="java.lang.String" value="Crear"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ButtonIrDialogoActionPerformed"/>
@@ -60,6 +63,14 @@
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ButtonBorrarActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="ButtonModificar">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Modificar"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ButtonModificarActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>
