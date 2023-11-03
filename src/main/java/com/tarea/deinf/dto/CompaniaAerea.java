@@ -1,14 +1,21 @@
 
 package com.tarea.deinf.dto;
 
-public class CompaniaAerea {
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
+public class CompaniaAerea implements Serializable{
     private String nombre;
     private String direccion;
     private String municipio;
     private String tlfPasajeros;
     private String tlfAeropuertos;
     private String codigo;
-
+    private int prefijo;
+    private static int incPref;
+    private static List<CompaniaAerea> listaCompanias=new ArrayList<>();
     public String getCodigo() {
         return codigo;
     }
@@ -16,15 +23,14 @@ public class CompaniaAerea {
     public void setCodigo(String codigo) {
         this.codigo = codigo;
     }
-    private int prefijo;
-
-    public CompaniaAerea(String nombre, String direccion, String municipio, String tlfPasajeros, String tlfAeropuertos,int prefijo,String codigo) {
+    
+    public CompaniaAerea(String nombre, String direccion, String municipio, String tlfPasajeros, String tlfAeropuertos,String codigo) {
         this.nombre = nombre;
         this.direccion = direccion;
         this.municipio = municipio;
         this.tlfPasajeros = tlfPasajeros;
         this.tlfAeropuertos = tlfAeropuertos;
-        this.prefijo=prefijo;
+        this.prefijo=setPrefijo();
         this.codigo=codigo;
     }
 
@@ -39,75 +45,76 @@ public class CompaniaAerea {
     public CompaniaAerea() {
     }
 
-    /**
-     * @return the nombre
-     */
+  
     public String getNombre() {
         return nombre;
     }
 
-    /**
-     * @param nombre the nombre to set
-     */
+    
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
 
-    /**
-     * @return the direccion
-     */
     public String getDireccion() {
         return direccion;
     }
 
-    /**
-     * @param direccion the direccion to set
-     */
     public void setDireccion(String direccion) {
         this.direccion = direccion;
     }
 
-    /**
-     * @return the municipio
-     */
     public String getMunicipio() {
         return municipio;
     }
 
-    /**
-     * @param municipio the municipio to set
-     */
     public void setMunicipio(String municipio) {
         this.municipio = municipio;
     }
 
-    /**
-     * @return the tlfPasajeros
-     */
     public String getTlfPasajeros() {
         return tlfPasajeros;
     }
 
-    /**
-     * @param tlfPasajeros the tlfPasajeros to set
-     */
     public void setTlfPasajeros(String tlfPasajeros) {
         this.tlfPasajeros = tlfPasajeros;
     }
 
-    /**
-     * @return the tlfAeropuertos
-     */
     public String getTlfAeropuertos() {
         return tlfAeropuertos;
     }
 
-    /**
-     * @param tlfAeropuertos the tlfAeropuertos to set
-     */
     public void setTlfAeropuertos(String tlfAeropuertos) {
         this.tlfAeropuertos = tlfAeropuertos;
     }
-    
-
+    private static int setPrefijo(){
+        incPref++;
+        return incPref;
+    }
+    //busca si existe la compañia con el mismo codigo y nombre
+    public static boolean buscarCompania(String codigo,String nombre){
+        for (CompaniaAerea ca:listaCompanias){
+            if (ca.getCodigo().equals(codigo)|| ca.getNombre().equals(nombre))return true;
+        }
+        return false;
+    }
+    //eliminar una compañia por su prefijo ya que es el unico id de la lista
+    public static boolean eliminarCompania(int prefijo){
+        Iterator<CompaniaAerea> it=listaCompanias.iterator();
+        CompaniaAerea ca;
+        while(it.hasNext()){
+            ca=it.next();
+            if (ca.getPrefijo()==prefijo){
+                it.remove();
+                return true;
+            }
+        }
+        return false;
+    }
+    //anaadir una compañia a la lista
+    public static void anaidirCompania(CompaniaAerea c){
+        listaCompanias.add(c);
+    }
+    public static List<CompaniaAerea> getListaCompanias(){
+        return listaCompanias;
+    }
 }

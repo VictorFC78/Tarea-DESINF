@@ -2,6 +2,9 @@
 package com.tarea.deinf.dto;
 
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 
 public class Vuelo {
@@ -12,18 +15,21 @@ public class Vuelo {
     private String horaSalida;
     private String horaLlegada;
     private String diasOpera;
-
+    private List<VueloDiario> vuelosDiario;
+    private CompaniaAerea codCompania;
     public Vuelo() {
     }
 
-    public Vuelo(String codigo, Aeropuerto origen, Aeropuerto destino, int plazas, String horaSalida, String horaLlegada, String diasOpera) {
-        this.codigo = codigo;
+    public Vuelo(String codigo, Aeropuerto origen, Aeropuerto destino, int plazas, String horaSalida, String horaLlegada, String diasOpera,List vuelos, CompaniaAerea compania) {
         this.origen = origen;
         this.destino = destino;
         this.plazas = plazas;
         this.horaSalida = horaSalida;
         this.horaLlegada = horaLlegada;
         this.diasOpera = diasOpera;
+        this.vuelosDiario=new ArrayList<>();
+        this.codCompania=compania;
+        this.codigo = codCompania.getCodigo()+codigo;
     }
 
     public String getCodigo() {
@@ -31,7 +37,7 @@ public class Vuelo {
     }
 
     public void setCodigo(String codigo) {
-        this.codigo = codigo;
+        this.codigo = codCompania.getCodigo()+codigo;
     }
 
     public Aeropuerto getOrigen() {
@@ -82,5 +88,27 @@ public class Vuelo {
         this.diasOpera = diasOpera;
     }
 
-    
+    public void anaidirVueloDiario(VueloDiario v){
+        vuelosDiario.add(v);
+    }
+    public VueloDiario buscarVueloDiario(String fecha){
+        for (VueloDiario v:vuelosDiario){
+            if(v.getFechaVuelo().equals(fecha)){
+                return v;
+            }
+        }
+        return null;
+    }
+     public boolean eliminarVueloDiario(String fecha){
+         Iterator<VueloDiario> it=vuelosDiario.iterator();
+         VueloDiario v;
+         while(it.hasNext()){
+             v=it.next();
+             if(v.getFechaVuelo().equals(fecha)){
+                 it.remove();
+                 return true;
+         }
+         }
+         return false;
 }
+}  
