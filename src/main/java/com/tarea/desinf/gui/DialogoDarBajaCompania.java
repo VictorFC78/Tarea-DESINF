@@ -17,18 +17,23 @@ private int opcion;
     public DialogoDarBajaCompania(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        rellenarCodigos();
+        if (rellenarCodigos()){
         DefaultComboBoxModel model=new DefaultComboBoxModel(codigos.toArray());
         ComboBoxCodigos.setModel(model);
         refrescarNombre();
+        }
     }
     //rellena una lista con los codigos de las compañias para utilizar en el combobox
-    private void rellenarCodigos(){
+    private boolean rellenarCodigos(){
         lista=CompaniaAerea.getListaCompanias();//recupera lista de compañias
+        if (!lista.isEmpty()){
         //itera pa rellenr un la lista con los codigos
-        for (CompaniaAerea c:lista){
-            codigos.add(c.getCodigo());
-        }  
+            for (CompaniaAerea c:lista){
+                codigos.add(c.getCodigo());
+            }
+            return true;
+        }
+        return false;
     }
     //recupera la compania seleccionada en el combobox
     private CompaniaAerea companiaSeleccionada(String codigo){
