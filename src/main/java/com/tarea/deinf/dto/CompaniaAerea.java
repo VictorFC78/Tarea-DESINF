@@ -87,5 +87,8 @@ public class CompaniaAerea implements Serializable{
         incPref++;
         return incPref;
     }
+    public static void inicializarPrefijo(int valor){
+        incPref=valor;
+    }
    
 }

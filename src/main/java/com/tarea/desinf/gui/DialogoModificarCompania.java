@@ -4,8 +4,11 @@ package com.tarea.desinf.gui;
 import com.tarea.deinf.dto.CompaniaAerea;
 import com.tarea.deinf.dto.Validador;
 import com.tarea.desinf.controlador.Controlador;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 
@@ -297,19 +300,25 @@ public class DialogoModificarCompania extends javax.swing.JDialog {
             }else codigoBlan=true;
             //en el caso de que este correcto los formatos de los campos que no esten vaacios se realizar los cambios 
             if ((tlfPasjroBlank || tlfPasjroVal)&&(tlfArptoBalnk || tlfArptoVal) && (codigoBlan || codigoVal)){
-                int posicion=listNombres.getSelectedIndex();//recupera la posicion de la lista que esta seleccionada
-                String [] datos=datosNuevos();//recupera el valor de los datos nuevos
-                //modifica los datos que no esten en blanco
-                Controlador.modificarCompania(this.compania.getPrefijo(), datos[0], datos[1], datos[2], datos[3], datos[4], datos[5]);
-                model.removeAllElements();//limpia la lista
-                rellenarNombres();//rellena la lista con los nombres de nuevo ya actualizado
-                for (String l:nombres){
-                model.addElement(l);
-            }
-                listNombres.setSelectedIndex(posicion);//se selecciona la posicion que estaba seleccionada antes del cambio
-                referescarDialogo();//refresca los datos de la compañia en los textfield
-                limpiarDatosNuevos();//limpia los datos de los txtfield que recoge los datos nuevos
-                //this.dispose();
+                try {
+                    int posicion=listNombres.getSelectedIndex();//recupera la posicion de la lista que esta seleccionada
+                    String [] datos=datosNuevos();//recupera el valor de los datos nuevos
+                    //modifica los datos que no esten en blanco
+                    Controlador.modificarCompania(this.compania.getPrefijo(), datos[0], datos[1], datos[2], datos[3], datos[4], datos[5]);
+                    model.removeAllElements();//limpia la lista
+                    rellenarNombres();//rellena la lista con los nombres de nuevo ya actualizado
+                    for (String l:nombres){
+                        model.addElement(l);
+                    }
+                    listNombres.setSelectedIndex(posicion);//se selecciona la posicion que estaba seleccionada antes del cambio
+                    referescarDialogo();//refresca los datos de la compañia en los textfield
+                    limpiarDatosNuevos();//limpia los datos de los txtfield que recoge los datos nuevos
+                    Controlador.escribirFichero();
+                    Controlador.leerFicnero();
+                    //this.dispose();
+                } catch (IOException ex) {
+                    
+                }
             }            
     }//GEN-LAST:event_btnModificarActionPerformed
  }

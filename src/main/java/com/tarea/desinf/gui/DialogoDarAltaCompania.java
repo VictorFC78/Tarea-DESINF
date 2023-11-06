@@ -2,6 +2,9 @@
 package com.tarea.desinf.gui;
 import com.tarea.deinf.dto.Validador;
 import com.tarea.desinf.controlador.Controlador;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 public class DialogoDarAltaCompania extends javax.swing.JDialog {
@@ -148,15 +151,22 @@ public class DialogoDarAltaCompania extends javax.swing.JDialog {
                 || tlfAerpto.length()==0 || codigo.length()==0){
             JOptionPane.showMessageDialog(this, "Hay campos en blanco", "CAMPOS COMPAÑIA", JOptionPane.ERROR_MESSAGE);
 
-        }else if  (Validador.formatoTelefono(TextFieldTlfPasaj.getText(), this)&&Validador.formatoCodigoCompania(TextFieldCodigo.getText(), this)
-                && Validador.formatoTelefono(TextFieldTlfAerpto.getText(), this)){
+        }else if  (Validador.formatoTelefono(tlfPasaj, this)&&Validador.formatoCodigoCompania(codigo, this)
+                && Validador.formatoTelefono(tlfAerpto, this)){
             //se comprueba que la compañia no existe en la lista con los mismos datos
             if (Controlador.existeCoincidencias(nombre, direccion, municipio, tlfPasaj, tlfAerpto, codigo)){
                 JOptionPane.showMessageDialog(this, "La compañia ya existe", "LISTA DE COMPAÑIAS", JOptionPane.ERROR_MESSAGE);
             }else{
-                Controlador.anaidirCompania(nombre, direccion, municipio, tlfPasaj, tlfAerpto, codigo);
-                this.dispose();
+                try {
+                    Controlador.anaidirCompania(nombre, direccion, municipio, tlfPasaj, tlfAerpto, codigo);
+                    Controlador.escribirFichero();
+                    Controlador.leerFicnero();
+                    this.dispose();
+                } catch (IOException ex) {
+                    
+                }
             }
+            
         }
 
     }//GEN-LAST:event_ButtonAceptarActionPerformed

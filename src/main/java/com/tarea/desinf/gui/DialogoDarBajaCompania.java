@@ -3,6 +3,7 @@ package com.tarea.desinf.gui;
 
 import com.tarea.deinf.dto.CompaniaAerea;
 import com.tarea.desinf.controlador.Controlador;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
@@ -21,6 +22,9 @@ private CompaniaAerea compania;
         DefaultComboBoxModel model=new DefaultComboBoxModel(codigos.toArray());
         ComboBoxCodigos.setModel(model);
         refrescarNombre();
+//        for (CompaniaAerea c:lista){
+//            System.out.println("Compañia numero:"+c.getPrefijo());
+//        }
         }
     }
     //rellena una lista con los codigos de las compañias para utilizar en el combobox
@@ -143,8 +147,14 @@ private CompaniaAerea compania;
       //devuelve un 0 con aceptar y un 2 con cancelar y un -1 al cerrar el dialogo sin eleccion
         int opcion=JOptionPane.showConfirmDialog(this, "Estas seguro de borrar compañia", "BORRAR COMPAÑIA", JOptionPane.OK_CANCEL_OPTION);
         if (opcion==0){
-            Controlador.eliminarCompania(compania.getPrefijo());
-            this.dispose();
+            try {
+                Controlador.eliminarCompania(compania.getPrefijo());
+                Controlador.escribirFichero();
+                Controlador.leerFicnero();
+                this.dispose();
+            } catch (IOException ex) {
+                
+            }
         }
 
         // TODO add your handling code here:

@@ -2,14 +2,70 @@
 package com.tarea.desinf.controlador;
 
 import com.tarea.deinf.dto.CompaniaAerea;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
 
+
 public class Controlador {
     private static List<CompaniaAerea> listaCompanias=new ArrayList<>();//lista de compañias 
     private static List<CompaniaAerea> listaaux=new ArrayList<>();//lista de compañias auxiliar
+    private static final File COMPANIAS=new File("compania.dat");
+    //escribe en el fichero la lista de compañias
+    public static boolean escribirFichero() throws FileNotFoundException, IOException{
+        ObjectOutputStream oos=new ObjectOutputStream(new FileOutputStream(COMPANIAS));
+        if (listaCompanias.isEmpty()) return false;
+        else{
+            for (CompaniaAerea c:listaCompanias){
+                oos.writeObject(c);
+            }
+            oos.close();
+            return true;
+        }
+    }
+   
+    public static boolean leerFicnero() throws FileNotFoundException{
+        ObjectInputStream ois=null;
+        CompaniaAerea compania;
+        if (COMPANIAS.exists()){
+        if (!listaCompanias.isEmpty()){
+            listaCompanias.clear();
+        }
+        try {
+            ois=new ObjectInputStream(new FileInputStream(COMPANIAS));
+            while ((compania=(CompaniaAerea)ois.readObject())!=null){
+                listaCompanias.add(compania);
+            }
+            } catch (IOException | ClassNotFoundException ex) {
+        }finally{
+            try {
+                ois.close();
+            } catch (IOException ex) {
+                return false;
+            }
+            }
+        }
+        CompaniaAerea.inicializarPrefijo(ultimoPrefijo());
+        return true;
+    }
+    
+    private static int ultimoPrefijo(){
+        int prefijo=0;
+        for (CompaniaAerea c:listaCompanias){
+            prefijo=c.getPrefijo();
+        }
+        return prefijo;
+    }
+    
+    
     //añade compania a la lista
     public static void anaidirCompania(String nombre,String direccion,String municipio,String tlfPasjro,String tlfArpto,String codigo){
         listaCompanias.add(new CompaniaAerea(nombre,direccion,municipio,tlfPasjro,tlfArpto,codigo));
@@ -86,7 +142,7 @@ public class Controlador {
         return null;
     }
     public static boolean existeCoincidencias(String nombre,String direccion,String municipio,String tlfPAs,String tlfArpto,String codigo){
-        for (CompaniaAerea c:listaaux){
+        for (CompaniaAerea c:listaCompanias){
             if(c.getNombre().equals(nombre)) return true;
             if(c.getDireccion().equals(direccion)&& c.getMunicipio().equals(municipio)) return true;
             if(c.getTlfPasajeros().equals(tlfPAs)) return true;
