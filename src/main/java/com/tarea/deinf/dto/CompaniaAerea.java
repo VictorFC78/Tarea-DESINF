@@ -2,9 +2,7 @@
 package com.tarea.deinf.dto;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+
 
 public class CompaniaAerea implements Serializable{
     private String nombre;
@@ -15,7 +13,6 @@ public class CompaniaAerea implements Serializable{
     private String codigo;
     private int prefijo;
     private static int incPref;
-    private static List<CompaniaAerea> listaCompanias=new ArrayList<>();
     public String getCodigo() {
         return codigo;
     }
@@ -90,49 +87,5 @@ public class CompaniaAerea implements Serializable{
         incPref++;
         return incPref;
     }
-    //busca si existe la compañia con el mismo codigo y nombre
-    public static boolean buscarCompania(String codigo,String nombre){
-        for (CompaniaAerea ca:listaCompanias){
-            if (ca.getCodigo().equals(codigo)|| ca.getNombre().equals(nombre))return true;
-        }
-        return false;
-    }
-    //eliminar una compañia por su prefijo ya que es el unico id de la lista
-    public static boolean eliminarCompania(int prefijo){
-        Iterator<CompaniaAerea> it=listaCompanias.iterator();
-        CompaniaAerea ca;
-        while(it.hasNext()){
-            ca=it.next();
-            if (ca.getPrefijo()==prefijo){
-                it.remove();
-                return true;
-            }
-        }
-        return false;
-    }
-    //anaadir una compañia a la lista
-    public static void anaidirCompania(CompaniaAerea c){
-        listaCompanias.add(c);
-    }
-    public static List<CompaniaAerea> getListaCompanias(){
-        return listaCompanias;
-    }
-    //modifica los datos que no esten vacios de la compania que tenga el prefijo psasdo por parametro
-    public static boolean modificarCompañia(int prefijo,String nombre,String direccion,String municipio,String tlfPas,String tlfArpto,String codigo){
-        Iterator<CompaniaAerea> it=listaCompanias.iterator();
-        CompaniaAerea compania;
-        while(it.hasNext()){
-            compania=it.next();
-            if (compania.getPrefijo()==prefijo){
-                if(nombre.length()!=0)compania.setNombre(nombre);
-                if(direccion.length()!=0)compania.setDireccion(direccion);
-                if(municipio.length()!=0)compania.setMunicipio(municipio);
-                if(tlfPas.length()!=0)compania.setTlfPasajeros(tlfPas);
-                if(tlfArpto.length()!=0)compania.setTlfAeropuertos(tlfArpto);
-                if(codigo.length()!=0)compania.setCodigo(codigo);
-                return true;
-            }
-        }
-        return false;
-    }
+   
 }

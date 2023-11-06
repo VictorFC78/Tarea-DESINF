@@ -2,6 +2,7 @@
 package com.tarea.desinf.gui;
 
 import com.tarea.deinf.dto.CompaniaAerea;
+import com.tarea.desinf.controlador.Controlador;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
@@ -13,7 +14,6 @@ public class DialogoDarBajaCompania extends javax.swing.JDialog {
 private List<String> codigos=new ArrayList<>();
 private List<CompaniaAerea> lista;
 private CompaniaAerea compania;
-private int opcion;
     public DialogoDarBajaCompania(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
@@ -25,9 +25,8 @@ private int opcion;
     }
     //rellena una lista con los codigos de las compañias para utilizar en el combobox
     private boolean rellenarCodigos(){
-        lista=CompaniaAerea.getListaCompanias();//recupera lista de compañias
-        if (!lista.isEmpty()){
-        //itera pa rellenr un la lista con los codigos
+        lista=Controlador.getListaCompanias();
+        if(!lista.isEmpty()){
             for (CompaniaAerea c:lista){
                 codigos.add(c.getCodigo());
             }
@@ -36,16 +35,11 @@ private int opcion;
         return false;
     }
     //recupera la compania seleccionada en el combobox
-    private CompaniaAerea companiaSeleccionada(String codigo){
-        for (CompaniaAerea c:lista){
-            if(c.getCodigo().equals(codigo))return c;
-        }
-        return null;
-    }
+    
     
     //muestra el nombre de la compañia en el Campo segun codigo seleccionado en combobox
     private void refrescarNombre(){
-        compania=companiaSeleccionada(ComboBoxCodigos.getSelectedItem().toString());
+        compania=Controlador.getCompaniaCodigo(ComboBoxCodigos.getSelectedItem().toString());
         TextFieldNombre.setText(compania.getNombre());  
     }
     /**
@@ -147,9 +141,9 @@ private int opcion;
 
     private void ButtonAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonAceptarActionPerformed
       //devuelve un 0 con aceptar y un 2 con cancelar y un -1 al cerrar el dialogo sin eleccion
-        opcion=JOptionPane.showConfirmDialog(this, "Estas seguro de borrar compañia", "BORRAR COMPAÑIA", JOptionPane.OK_CANCEL_OPTION);
+        int opcion=JOptionPane.showConfirmDialog(this, "Estas seguro de borrar compañia", "BORRAR COMPAÑIA", JOptionPane.OK_CANCEL_OPTION);
         if (opcion==0){
-            CompaniaAerea.eliminarCompania(compania.getPrefijo());
+            Controlador.eliminarCompania(compania.getPrefijo());
             this.dispose();
         }
 

@@ -3,6 +3,7 @@ package com.tarea.desinf.gui;
 
 import com.tarea.deinf.dto.CompaniaAerea;
 import com.tarea.deinf.dto.Validador;
+import com.tarea.desinf.controlador.Controlador;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.DefaultListModel;
@@ -11,7 +12,7 @@ import javax.swing.JOptionPane;
 
 public class DialogoModificarCompania extends javax.swing.JDialog {
     private List<CompaniaAerea> lista;//lista con todas las compañias
-    private List<CompaniaAerea> listaaux=new ArrayList<>();//lista con las restantes compañias menos la seleccioinada en la lista
+    private List<CompaniaAerea> listaaux;//lista con las restantes compañias menos la seleccioinada en la lista
     private List<String> nombres=new ArrayList<>();//lista con los nombres de las compañia 
     private CompaniaAerea compania;
     private DefaultListModel model;
@@ -21,13 +22,13 @@ public class DialogoModificarCompania extends javax.swing.JDialog {
         //comprueba si la lista no esta vacia, sino esta vacia la rellena la lista de nombres 
         if (rellenarNombres()){
             model=new DefaultListModel();//modelo para la lista 
-            Listcompanias.setModel(model);
+            listNombres.setModel(model);
             for (String l:nombres){ //rellena la lista con la lista de nombres
                 model.addElement(l);
             }
-            Listcompanias.setSelectedIndex(0);//selecciona el nombre de la lista de la posicion 0
-            this.compania=companiaSeleccionada(Listcompanias.getSelectedValue());//devuelve la compañia de la posicion 0
-            rellenarListaAux();//rellena la lista auxiliar
+            listNombres.setSelectedIndex(0);//selecciona el nombre de la lista de la posicion 0
+            this.compania=Controlador.getCompaniaNombre(listNombres.getSelectedValue());//devuelve la compañia de la posicion 0
+            Controlador.rellenarListaAux(this.compania.getPrefijo());//rellena la lista auxiliar
             referescarDialogo();//muestra el contenido de la compañia seleccionada en la lista
             
         }
@@ -37,7 +38,7 @@ public class DialogoModificarCompania extends javax.swing.JDialog {
         if (!nombres.isEmpty()){
             nombres.clear();
         }
-        lista=CompaniaAerea.getListaCompanias();
+        lista=Controlador.getListaCompanias();
         if (!lista.isEmpty()){
             for (CompaniaAerea c:lista){
                 nombres.add(c.getNombre());
@@ -46,29 +47,10 @@ public class DialogoModificarCompania extends javax.swing.JDialog {
         }
         return false;
     }
-    //rellena una lista con todas las compañias menos la seleccionada para comprobaciones
-    private void rellenarListaAux(){
-        //conocer cual es la compañia seleccionada
-        if (!listaaux.isEmpty()){
-                listaaux.clear();
-            }
-        for (CompaniaAerea c:lista){
-            
-            if(!c.getNombre().equals(this.compania.getNombre())){ 
-                listaaux.add(c);
-            }
-        }
-    }
-    //devuelve la compañia que esta seleccionada en la lista
-    private CompaniaAerea companiaSeleccionada(String nombre){
-        for (CompaniaAerea c:lista){
-            if (c.getNombre().equals(nombre)) return c;
-        }
-        return null;
-    }
+    
     //muestra los datos de la compañia seleccionada
     private void referescarDialogo(){
-        this.compania=companiaSeleccionada(Listcompanias.getSelectedValue());
+        this.compania=Controlador.getCompaniaNombre(listNombres.getSelectedValue());
         mostrarDatosActuales(); 
     }
     //metodo para seleccionar iniicialmente el primer elemnto para mostarlo
@@ -100,42 +82,7 @@ public class DialogoModificarCompania extends javax.swing.JDialog {
         txtTlfArptoN.setText("");
         txtCodigoN.setText("");
     }
-    private boolean coincidenciaNombre(){
-        for (CompaniaAerea c:listaaux){
-            if (c.getNombre().equals(txtNombreN.getText()))return true;
-        }
-        return false;
-    }
-    private boolean coincidenciaMunicipio(){
-        for (CompaniaAerea c:listaaux){
-            if (c.getMunicipio().equals(txtMunicipioN.getText()))return true;
-        }
-        return false;
-    }
-    private boolean coincidenciaDireccion(){
-        for (CompaniaAerea c:listaaux){
-            if (c.getDireccion().equals(txtDireccionN.getText()))return true;
-        }
-        return false;
-    }
-    private boolean coincidenciaTlfPasjro(){
-        for (CompaniaAerea c:listaaux){
-            if (c.getTlfPasajeros().equals(txtTlfPasjroN.getText()))return true;
-        }
-        return false;
-    }
-    private boolean coincidenciaTlfArpto(){
-        for (CompaniaAerea c:listaaux){
-            if (c.getTlfAeropuertos().equals(txtTlfArptoN.getText()))return true;
-        }
-        return false;
-    }
-    private boolean coincidenciaCodigo(){
-        for (CompaniaAerea c:listaaux){
-            if (c.getCodigo().equals(txtCodigoN.getText()))return true;
-        }
-        return false;
-    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -147,7 +94,7 @@ public class DialogoModificarCompania extends javax.swing.JDialog {
 
         jLabel4 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        Listcompanias = new javax.swing.JList<>();
+        listNombres = new javax.swing.JList<>();
         btnCancelar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -175,12 +122,12 @@ public class DialogoModificarCompania extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        Listcompanias.addMouseListener(new java.awt.event.MouseAdapter() {
+        listNombres.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                ListcompaniasMouseClicked(evt);
+                listNombresMouseClicked(evt);
             }
         });
-        jScrollPane1.setViewportView(Listcompanias);
+        jScrollPane1.setViewportView(listNombres);
 
         btnCancelar.setText("Cancelar");
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {
@@ -315,56 +262,51 @@ public class DialogoModificarCompania extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnCancelarActionPerformed
 
-    private void ListcompaniasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ListcompaniasMouseClicked
+    private void listNombresMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listNombresMouseClicked
        
         referescarDialogo();
-        rellenarListaAux();
-    }//GEN-LAST:event_ListcompaniasMouseClicked
+        Controlador.rellenarListaAux(this.compania.getPrefijo());
+    }//GEN-LAST:event_listNombresMouseClicked
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
         //se cuemprueba si hay coindicencias de los datos actuales con datos de otras compañias
-        boolean nombreOk,direccionOk,tlfPasjro,tlfArpto,codigo,municipioOk;
-        nombreOk=coincidenciaNombre();
-        direccionOk=coincidenciaDireccion();
-        tlfPasjro=coincidenciaTlfPasjro();
-        tlfArpto=coincidenciaTlfArpto();
-        codigo=coincidenciaCodigo();
-        municipioOk=coincidenciaMunicipio();
+       
+        String[] datosNuevos=datosNuevos();
         //si hay coincidencia muestra un mensaje de error
-        if (nombreOk || direccionOk || tlfPasjro || tlfArpto || codigo||(direccionOk &&municipioOk)){
-            JOptionPane.showMessageDialog(Listcompanias, "Existe coincidencia con otras compañias");
+        if (Controlador.existeCoincidencias(datosNuevos[0], datosNuevos[1], datosNuevos[2], datosNuevos[3], datosNuevos[4], datosNuevos[5])){
+            JOptionPane.showMessageDialog(listNombres, "Existe coincidencia con otras compañias");
         //sino hay coincidencia se comprueba si los datos nuevos estan vacias, y sino estan vacios que este bien el formato
         }else{
             boolean  tlfPasjroVal=false,tlfArptoVal=false,codigoVal=false,nombreVal=false,direccionVal=false,municipioVal=false;
             boolean tlfPasjroBlank=false,tlfArptoBalnk=false,codigoBlan=false;
             
-            if (!txtTlfPasjroN.getText().isEmpty()){
-                if(Validador.formatoTelefono(txtTlfPasjroN.getText(), this)){
+            if (!datosNuevos[3].isEmpty()){
+                if(Validador.formatoTelefono(datosNuevos[3], this)){
                         tlfPasjroVal=true;
                     }
             } else tlfPasjroBlank=true;
-            if (!txtTlfArptoN.getText().isEmpty()){
-                    if(Validador.formatoTelefono(txtTlfArptoN.getText(), this)){
+            if (!datosNuevos[4].isEmpty()){
+                    if(Validador.formatoTelefono(datosNuevos[4], this)){
                         tlfArptoVal=true;
                     }
             }else tlfArptoBalnk=true;
-            if (!txtCodigoN.getText().isEmpty()){
-                    if(Validador.formatoCodigoCompania(txtCodigoN.getText(), this)){
+            if (!datosNuevos[5].isEmpty()){
+                    if(Validador.formatoCodigoCompania(datosNuevos[5], this)){
                         codigoVal=true;
                     }
             }else codigoBlan=true;
             //en el caso de que este correcto los formatos de los campos que no esten vaacios se realizar los cambios 
             if ((tlfPasjroBlank || tlfPasjroVal)&&(tlfArptoBalnk || tlfArptoVal) && (codigoBlan || codigoVal)){
-                int posicion=Listcompanias.getSelectedIndex();//recupera la posicion de la lista que esta seleccionada
+                int posicion=listNombres.getSelectedIndex();//recupera la posicion de la lista que esta seleccionada
                 String [] datos=datosNuevos();//recupera el valor de los datos nuevos
                 //modifica los datos que no esten en blanco
-                CompaniaAerea.modificarCompañia(this.compania.getPrefijo(), datos[0], datos[1], datos[2], datos[3], datos[4], datos[5]);
+                Controlador.modificarCompania(this.compania.getPrefijo(), datos[0], datos[1], datos[2], datos[3], datos[4], datos[5]);
                 model.removeAllElements();//limpia la lista
                 rellenarNombres();//rellena la lista con los nombres de nuevo ya actualizado
                 for (String l:nombres){
                 model.addElement(l);
             }
-                Listcompanias.setSelectedIndex(posicion);//se selecciona la posicion que estaba seleccionada antes del cambio
+                listNombres.setSelectedIndex(posicion);//se selecciona la posicion que estaba seleccionada antes del cambio
                 referescarDialogo();//refresca los datos de la compañia en los textfield
                 limpiarDatosNuevos();//limpia los datos de los txtfield que recoge los datos nuevos
                 //this.dispose();
@@ -378,7 +320,6 @@ public class DialogoModificarCompania extends javax.swing.JDialog {
    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JList<String> Listcompanias;
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnModificar;
     private javax.swing.JLabel jLabel1;
@@ -391,6 +332,7 @@ public class DialogoModificarCompania extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JList<String> listNombres;
     private javax.swing.JTextField txtCodigo;
     private javax.swing.JTextField txtCodigoN;
     private javax.swing.JTextField txtDireccion;
