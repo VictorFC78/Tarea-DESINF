@@ -1,7 +1,7 @@
+package com.tarea.desinf.gui;
 
-import com.tarea.desinf.gui.DialogoDarAltaCompania;
-import com.tarea.desinf.gui.DialogoDarBajaCompania;
-import com.tarea.desinf.gui.DialogoModificarCompania;
+
+
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -33,6 +33,7 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         ButtonIrDialogo = new javax.swing.JButton();
         ButtonBorrar = new javax.swing.JButton();
         ButtonModificar = new javax.swing.JButton();
+        btnVuelo = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -57,17 +58,27 @@ public class PantallaPrincipal extends javax.swing.JFrame {
             }
         });
 
+        btnVuelo.setText("Vuelo");
+        btnVuelo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVueloActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(147, Short.MAX_VALUE)
-                .addComponent(ButtonIrDialogo)
-                .addGap(2, 2, 2)
-                .addComponent(ButtonModificar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(ButtonBorrar)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnVuelo)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(ButtonIrDialogo)
+                        .addGap(2, 2, 2)
+                        .addComponent(ButtonModificar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(ButtonBorrar)))
                 .addGap(20, 20, 20))
         );
         layout.setVerticalGroup(
@@ -78,7 +89,9 @@ public class PantallaPrincipal extends javax.swing.JFrame {
                     .addComponent(ButtonIrDialogo)
                     .addComponent(ButtonBorrar)
                     .addComponent(ButtonModificar))
-                .addGap(41, 41, 41))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnVuelo)
+                .addContainerGap())
         );
 
         pack();
@@ -86,7 +99,7 @@ public class PantallaPrincipal extends javax.swing.JFrame {
 
     private void ButtonIrDialogoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonIrDialogoActionPerformed
         //crear un dialogo de insertar compañias
-        DialogoDarAltaCompania dialogo=new DialogoDarAltaCompania(this, true);
+        DialogoDarAltaCompania dialogo=new DialogoDarAltaCompania(new javax.swing.JDialog(), true);
         dialogo.setVisible(true);
 
 
@@ -105,11 +118,20 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_ButtonModificarActionPerformed
 
+    private void btnVueloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVueloActionPerformed
+        DialogoDarAltaVuelo darAltaVuelo=new DialogoDarAltaVuelo(this, true);
+        darAltaVuelo.setVisible(true);
+
+
+        
+    }//GEN-LAST:event_btnVueloActionPerformed
+
    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton ButtonBorrar;
     private javax.swing.JButton ButtonIrDialogo;
     private javax.swing.JButton ButtonModificar;
+    private javax.swing.JButton btnVuelo;
     // End of variables declaration//GEN-END:variables
 }

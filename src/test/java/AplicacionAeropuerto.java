@@ -1,7 +1,9 @@
 
+import com.tarea.deinf.dto.Aeropuerto;
 import com.tarea.desinf.controlador.Controlador;
-import java.io.FileNotFoundException;
-import javax.swing.JOptionPane;
+import com.tarea.desinf.controlador.CargadiorAeropuertos;
+import com.tarea.desinf.gui.PantallaPrincipal;
+
 
 
 
@@ -17,15 +19,12 @@ import javax.swing.JOptionPane;
  */
 public class AplicacionAeropuerto {
     public static void main(String[] args) {
-        
-        try {
-            Controlador.leerFicnero();
-            PantallaPrincipal pantallaPrincipal=new PantallaPrincipal();
-            pantallaPrincipal.setVisible(true);
-        } catch (FileNotFoundException ex) {
-            PantallaPrincipal pantallaPrincipal=new PantallaPrincipal();
-            pantallaPrincipal.setVisible(true);
-            JOptionPane.showMessageDialog(pantallaPrincipal, "Error al leer de los archivos");
-        }
+        //crear nuestro aeropuero de origen
+        Aeropuerto aeropuertoOrigen=new Aeropuerto("OVD", "Aeropuerto de Asturias", "33016");
+        CargadiorAeropuertos controladorVuelos=new CargadiorAeropuertos();
+        controladorVuelos.leerFicheroCSV();
+        Controlador.leerFicherosCSV();
+        PantallaPrincipal pantallaPrincipal=new PantallaPrincipal();
+        pantallaPrincipal.setVisible(true);
     }
 }

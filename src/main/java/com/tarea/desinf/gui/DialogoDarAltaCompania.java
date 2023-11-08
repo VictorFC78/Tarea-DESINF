@@ -2,14 +2,12 @@
 package com.tarea.desinf.gui;
 import com.tarea.deinf.dto.Validador;
 import com.tarea.desinf.controlador.Controlador;
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+
 
 public class DialogoDarAltaCompania extends javax.swing.JDialog {
 
-    public DialogoDarAltaCompania(java.awt.Frame parent, boolean modal) {
+    public DialogoDarAltaCompania(javax.swing.JDialog parent, boolean modal) {
         super(parent, modal);
         initComponents();
     }
@@ -157,14 +155,10 @@ public class DialogoDarAltaCompania extends javax.swing.JDialog {
             if (Controlador.existeCoincidencias(nombre, direccion, municipio, tlfPasaj, tlfAerpto, codigo)){
                 JOptionPane.showMessageDialog(this, "La compañia ya existe", "LISTA DE COMPAÑIAS", JOptionPane.ERROR_MESSAGE);
             }else{
-                try {
-                    Controlador.anaidirCompania(nombre, direccion, municipio, tlfPasaj, tlfAerpto, codigo);
-                    Controlador.escribirFichero();
-                    Controlador.leerFicnero();
-                    this.dispose();
-                } catch (IOException ex) {
-                    
-                }
+                Controlador.anaidirCompania(nombre, direccion, municipio, tlfPasaj, tlfAerpto, codigo);
+                Controlador.escribirFicheroCSV();
+                Controlador.escribirFicheroCSV();
+                this.dispose();
             }
             
         }

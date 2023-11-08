@@ -300,25 +300,21 @@ public class DialogoModificarCompania extends javax.swing.JDialog {
             }else codigoBlan=true;
             //en el caso de que este correcto los formatos de los campos que no esten vaacios se realizar los cambios 
             if ((tlfPasjroBlank || tlfPasjroVal)&&(tlfArptoBalnk || tlfArptoVal) && (codigoBlan || codigoVal)){
-                try {
-                    int posicion=listNombres.getSelectedIndex();//recupera la posicion de la lista que esta seleccionada
-                    String [] datos=datosNuevos();//recupera el valor de los datos nuevos
-                    //modifica los datos que no esten en blanco
-                    Controlador.modificarCompania(this.compania.getPrefijo(), datos[0], datos[1], datos[2], datos[3], datos[4], datos[5]);
-                    model.removeAllElements();//limpia la lista
-                    rellenarNombres();//rellena la lista con los nombres de nuevo ya actualizado
-                    for (String l:nombres){
-                        model.addElement(l);
-                    }
-                    listNombres.setSelectedIndex(posicion);//se selecciona la posicion que estaba seleccionada antes del cambio
-                    referescarDialogo();//refresca los datos de la compañia en los textfield
-                    limpiarDatosNuevos();//limpia los datos de los txtfield que recoge los datos nuevos
-                    Controlador.escribirFichero();
-                    Controlador.leerFicnero();
-                    //this.dispose();
-                } catch (IOException ex) {
-                    
+                int posicion=listNombres.getSelectedIndex();//recupera la posicion de la lista que esta seleccionada
+                String [] datos=datosNuevos();//recupera el valor de los datos nuevos
+                //modifica los datos que no esten en blanco
+                Controlador.modificarCompania(this.compania.getPrefijo(), datos[0], datos[1], datos[2], datos[3], datos[4], datos[5]);
+                model.removeAllElements();//limpia la lista
+                rellenarNombres();//rellena la lista con los nombres de nuevo ya actualizado
+                for (String l:nombres){
+                    model.addElement(l);
                 }
+                listNombres.setSelectedIndex(posicion);//se selecciona la posicion que estaba seleccionada antes del cambio
+                referescarDialogo();//refresca los datos de la compañia en los textfield
+                limpiarDatosNuevos();//limpia los datos de los txtfield que recoge los datos nuevos
+                Controlador.escribirFicheroCSV();
+                Controlador.leerFicherosCSV();
+                //this.dispose();
             }            
     }//GEN-LAST:event_btnModificarActionPerformed
  }

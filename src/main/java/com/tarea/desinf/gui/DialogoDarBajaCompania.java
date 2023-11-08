@@ -147,14 +147,10 @@ private CompaniaAerea compania;
       //devuelve un 0 con aceptar y un 2 con cancelar y un -1 al cerrar el dialogo sin eleccion
         int opcion=JOptionPane.showConfirmDialog(this, "Estas seguro de borrar compañia", "BORRAR COMPAÑIA", JOptionPane.OK_CANCEL_OPTION);
         if (opcion==0){
-            try {
-                Controlador.eliminarCompania(compania.getPrefijo());
-                Controlador.escribirFichero();
-                Controlador.leerFicnero();
-                this.dispose();
-            } catch (IOException ex) {
-                
-            }
+            Controlador.eliminarCompania(compania.getPrefijo());
+            Controlador.escribirFicheroCSV();
+            Controlador.leerFicherosCSV();
+            this.dispose();
         }
 
         // TODO add your handling code here:

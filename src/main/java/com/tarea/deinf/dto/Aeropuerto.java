@@ -6,7 +6,7 @@ import java.util.Iterator;
 import java.util.List;
 
 
-class Aeropuerto {
+public class Aeropuerto {
     private String iata;
     private String nombre;
     private String municipio;

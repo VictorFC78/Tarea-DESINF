@@ -31,7 +31,7 @@ public class Validador {
         }
     }
     public static boolean formatoCodigoVuelo(String codigo,Component p){
-         if (codigo.matches("[A-Z][1-9]\\d{1,4}"))return true;
+         if (codigo.matches("\\d{1,4}"))return true;
         
         else{
             mostarErrores(Validador.codigo,"ERROR FORMATO CODIGO",p);
@@ -67,6 +67,13 @@ public class Validador {
         else{
                 mostarErrores(Validador.codigo,"ERROR FORMATO DIAS QUE OPERA",p);
         
+            return false;
+        }
+    }
+    public static boolean formatoPlazas(String plazas,Component p){
+        if(plazas.matches("\\[1-9]{1,3}")) return true;
+        else{
+            mostarErrores(Validador.codigo,"ERROR FORMATO PLAZAS",p);
             return false;
         }
     }
