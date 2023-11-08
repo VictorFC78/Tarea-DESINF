@@ -214,31 +214,36 @@ public class DialogoDarAltaVuelo extends javax.swing.JDialog {
         Date fechaSalida=(Date)spinnerHoraSalida.getValue();
         String diasOpera=txtDiasOpera.getText();
         SimpleDateFormat formato=new SimpleDateFormat("HH:mm");//datos formato a los campos de hora
-        String horaSalida=formato.format((Date)spinnerHoraSalida.getValue());//formateamos el valor al formato HH:mm
-        String horaLlegada=formato.format((Date)spinnerHoraLlegada.getValue());
-        LocalTime hLlegada=LocalTime.parse(horaLlegada);
-        LocalTime hSalida=LocalTime.parse(horaSalida);
-        DialogoDarAltaCompania altaCompania=new DialogoDarAltaCompania(this, true);
-        altaCompania.setVisible(true);
+        String horaSalida=formato.format((Date)spinnerHoraSalida.getValue());//formato string  valor al formato HH:mm
+        String horaLlegada=formato.format((Date)spinnerHoraLlegada.getValue());//formato string  valor al formato HH:mm
+        LocalTime hLlegada=LocalTime.parse(horaLlegada);//formato local time hh:mm
+        LocalTime hSalida=LocalTime.parse(horaSalida);//formato local time hh:mm
         
         
+        //comprueba si existe algun campo vacio
         if (compania.isEmpty()||codigoVuelo.isEmpty()||diasOpera.isEmpty()){
             JOptionPane.showMessageDialog(this, "NO SE PERMITEN CAMPOS EN BLANCO");
+        //comprueba si las horas son correctas    
         }else if ((hSalida.compareTo(hLlegada))==-1||(hSalida.compareTo(hLlegada)==0)){ 
-            JOptionPane.showMessageDialog(this, "HORAS ERRONEAS");    
-        }else if(Validador.formatoDiasOpera(diasOpera, this)){
-        
+            JOptionPane.showMessageDialog(this, "HORAS ERRONEAS"); 
+        //comprueba si el formato de dias opera es correcto
+        }else if(!Validador.formatoDiasOpera(diasOpera, this)){
+        // si todo es correcto
         }else{
+            //comprueba si la compania exite
+            
             if(Controlador.existeCoincidencias(compania, "", "", "", "", "")){
+                
              //crear un vuelo y añadirlo a lalista de vuelos
              //DialogoDarAltaCompania altaCompania=new DialogoDarAltaCompania(frame, true);
              //altaCompania.setVisible(true);
-            }else{
-                //crear un dialogo de crear compañia y despues crear el vuelo y añadirlo a la lista 
-                //JDialog dialogo=new JDialog(this, true);
+            }else{//la compania no existe
                 
-                //DialogoDarAltaCompania altaCompania=(DialogoDarAltaCompania)dialogo;
-                 //altaCompania.setVisible(true);    
+                //crear un dialogo de crear compañia para crear la compania 
+                DialogoDarAltaCompania altaCompania=new DialogoDarAltaCompania(this, true);
+                altaCompania.setVisible(true);
+                
+                    
                  }
         }       
         
