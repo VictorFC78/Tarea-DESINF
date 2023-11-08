@@ -46,7 +46,9 @@ public class DialogoDarAltaVuelo extends javax.swing.JDialog {
         }
        return null;
     }
-     
+    public String enviarDatosJialogo(){
+        return this.txtCompania.getText();
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -133,13 +135,14 @@ public class DialogoDarAltaVuelo extends javax.swing.JDialog {
                         .addGap(32, 32, 32)
                         .addGroup(panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(txtCodigoVuelo)
-                            .addComponent(txtDiasOpera)
                             .addComponent(comboBoxArptoOrgn, 0, 212, Short.MAX_VALUE)
                             .addComponent(txtCompania)
                             .addComponent(comboArptoDesno, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(spinnerHoraSalida)
-                            .addComponent(spinnerHoraLlegada)
-                            .addComponent(spinnerPlzas))))
+                            .addComponent(spinnerPlzas, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(txtDiasOpera, javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(spinnerHoraLlegada, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE)
+                                .addComponent(spinnerHoraSalida, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap(187, Short.MAX_VALUE))
         );
         panel1Layout.setVerticalGroup(
@@ -239,9 +242,12 @@ public class DialogoDarAltaVuelo extends javax.swing.JDialog {
              //altaCompania.setVisible(true);
             }else{//la compania no existe
                 
-                //crear un dialogo de crear compañia para crear la compania 
+                //crear un dialogo de crear compañia para crear la compania
+                Controlador.activarTransferenciaDatos();
+                Controlador.setDatoTransferido(compania);
                 DialogoDarAltaCompania altaCompania=new DialogoDarAltaCompania(this, true);
                 altaCompania.setVisible(true);
+                
                 
                     
                  }

@@ -68,13 +68,15 @@
                           <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
                               <Component id="txtCodigoVuelo" alignment="0" max="32767" attributes="0"/>
-                              <Component id="txtDiasOpera" alignment="0" max="32767" attributes="0"/>
                               <Component id="comboBoxArptoOrgn" pref="212" max="32767" attributes="0"/>
                               <Component id="txtCompania" alignment="0" max="32767" attributes="0"/>
                               <Component id="comboArptoDesno" max="32767" attributes="0"/>
-                              <Component id="spinnerHoraSalida" alignment="0" max="32767" attributes="0"/>
-                              <Component id="spinnerHoraLlegada" alignment="0" max="32767" attributes="0"/>
-                              <Component id="spinnerPlzas" alignment="0" max="32767" attributes="0"/>
+                              <Component id="spinnerPlzas" alignment="1" min="-2" max="-2" attributes="0"/>
+                              <Group type="103" alignment="1" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="txtDiasOpera" alignment="1" max="32767" attributes="0"/>
+                                  <Component id="spinnerHoraLlegada" alignment="1" pref="0" max="32767" attributes="0"/>
+                                  <Component id="spinnerHoraSalida" alignment="1" min="-2" pref="84" max="-2" attributes="0"/>
+                              </Group>
                           </Group>
                       </Group>
                   </Group>

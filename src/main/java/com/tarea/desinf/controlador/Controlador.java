@@ -20,7 +20,8 @@ public class Controlador {
     private static List<CompaniaAerea> listaCompanias=new ArrayList<>();//lista de compañias 
     private static List<CompaniaAerea> listaaux=new ArrayList<>();//lista de compañias auxiliar
     private static final File COMPANIAS=new File("compania.csv");
-   
+    private static boolean permisoTranfDatos;
+    private static String datoTransferido;
     //escribir fichero CSV
     public static boolean escribirFicheroCSV(){
         if (listaCompanias.isEmpty()) return false;
@@ -196,6 +197,26 @@ public class Controlador {
             }
         }
         return false;
+    }
+    //pone a true una variable para indicar que existe transferencia de datos entre dar alta vuelo y dar alta compañia
+    public static void activarTransferenciaDatos(){
+        permisoTranfDatos=true;
+    }
+    //pone a false una variable para indicar que existe transferencia de datos entre dar alta vuelo y dar alta compañia
+
+    public static void desactivarTransferenciaDatos(){
+        permisoTranfDatos=false; 
+    }
+    public static boolean getTransferenciDatos(){
+        return permisoTranfDatos;
+    }
+    //establece el valor del dato que se transferir entre dialogos
+    public static void setDatoTransferido(String dato){
+        datoTransferido=dato;
+    }
+    //devuelve el valor del dato transferido
+    public static String getDatoTranserido(){
+        return datoTransferido;
     }
 }
 

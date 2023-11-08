@@ -6,12 +6,43 @@ import javax.swing.JOptionPane;
 
 
 public class DialogoDarAltaCompania extends javax.swing.JDialog {
-
+    
+    
     public DialogoDarAltaCompania(javax.swing.JDialog parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        existeTransferenciaDialogo();
     }
-    
+    private void darAlta(){
+       String nombre=TextFieldNombre.getText();
+        String direccion=TextFieldDireccion.getText();
+        String municipio=TextFieldMunicipio.getText();
+        String tlfPasaj=TextFieldTlfPasaj.getText();
+        String tlfAerpto=TextFieldTlfAerpto.getText();
+        String codigo=TextFieldCodigo.getText();
+        if(nombre.length()==0 || direccion.length()==0 || municipio.length()==0 || tlfPasaj.length()==0
+                || tlfAerpto.length()==0 || codigo.length()==0){
+            JOptionPane.showMessageDialog(this, "Hay campos en blanco", "CAMPOS COMPAÑIA", JOptionPane.ERROR_MESSAGE);
+
+        }else if  (Validador.formatoTelefono(tlfPasaj, this)&&Validador.formatoCodigoCompania(codigo, this)
+                && Validador.formatoTelefono(tlfAerpto, this)){
+            //se comprueba que la compañia no existe en la lista con los mismos datos
+            if (Controlador.existeCoincidencias(nombre, direccion, municipio, tlfPasaj, tlfAerpto, codigo)){
+                JOptionPane.showMessageDialog(this, "La compañia ya existe", "LISTA DE COMPAÑIAS", JOptionPane.ERROR_MESSAGE);
+            }else{
+                Controlador.anaidirCompania(nombre, direccion, municipio, tlfPasaj, tlfAerpto, codigo);
+                Controlador.escribirFicheroCSV();
+                Controlador.escribirFicheroCSV();
+                this.dispose();
+            }
+            
+        } 
+    }
+    private void existeTransferenciaDialogo(){
+        if(Controlador.getTransferenciDatos()) {
+            TextFieldNombre.setText(Controlador.getDatoTranserido());}
+            Controlador.desactivarTransferenciaDatos();
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -139,30 +170,8 @@ public class DialogoDarAltaCompania extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void ButtonAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonAceptarActionPerformed
-        String nombre=TextFieldNombre.getText();
-        String direccion=TextFieldDireccion.getText();
-        String municipio=TextFieldMunicipio.getText();
-        String tlfPasaj=TextFieldTlfPasaj.getText();
-        String tlfAerpto=TextFieldTlfAerpto.getText();
-        String codigo=TextFieldCodigo.getText();
-        if(nombre.length()==0 || direccion.length()==0 || municipio.length()==0 || tlfPasaj.length()==0
-                || tlfAerpto.length()==0 || codigo.length()==0){
-            JOptionPane.showMessageDialog(this, "Hay campos en blanco", "CAMPOS COMPAÑIA", JOptionPane.ERROR_MESSAGE);
-
-        }else if  (Validador.formatoTelefono(tlfPasaj, this)&&Validador.formatoCodigoCompania(codigo, this)
-                && Validador.formatoTelefono(tlfAerpto, this)){
-            //se comprueba que la compañia no existe en la lista con los mismos datos
-            if (Controlador.existeCoincidencias(nombre, direccion, municipio, tlfPasaj, tlfAerpto, codigo)){
-                JOptionPane.showMessageDialog(this, "La compañia ya existe", "LISTA DE COMPAÑIAS", JOptionPane.ERROR_MESSAGE);
-            }else{
-                Controlador.anaidirCompania(nombre, direccion, municipio, tlfPasaj, tlfAerpto, codigo);
-                Controlador.escribirFicheroCSV();
-                Controlador.escribirFicheroCSV();
-                this.dispose();
-            }
-            
-        }
-
+        darAlta();
+        
     }//GEN-LAST:event_ButtonAceptarActionPerformed
 
     private void ButtonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonCancelarActionPerformed
